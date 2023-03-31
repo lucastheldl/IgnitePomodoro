@@ -16,9 +16,25 @@ export const HistoryContainer = styled.main`
 export const HistoryList = styled.div`
   flex: 1;
   overflow: auto;
+  overflow-y: scroll;
   margin-top: 2rem;
+  max-height: 400px;
+
+  &::-webkit-scrollbar-track {
+    padding: 2px 0;
+    background-color: ${(props) => props.theme['gray-600']};
+  }
+  &::-webkit-scrollbar {
+    width: 10px;
+  }
+  &::-webkit-scrollbar-thumb {
+    box-shadow: inset 0 0 6px rgba(0, 0, 0, 0.3);
+    background-color: ${(props) => props.theme['gray-100']};
+  }
+
   table {
     width: 100%;
+
     border-collapse: collapse;
     min-width: 600px;
 
