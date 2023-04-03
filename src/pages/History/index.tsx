@@ -1,9 +1,24 @@
-import { useContext, useState } from 'react'
+import { useContext, useEffect, useState } from 'react'
 import { HistoryContainer, HistoryList, Status } from './styles'
 import { CyclesContext } from '../Home'
+import { Cycle } from '../../reducers/reducer'
 
 export function History() {
-  const { cycles } = useContext(CyclesContext)
+  const { cycles, saveCyclesInLocalStorage } = useContext(CyclesContext)
+  const [savedCycles, setCycles] = useState<Cycle[]>([])
+
+  useEffect(() => {
+    if (cycles.length === 0) return
+    saveCyclesInLocalStorage()
+  }, [cycles, saveCyclesInLocalStorage])
+
+  useEffect(() => {
+    const cyclesArray = localStorage.getItem('cyclesPomodoroArray')
+
+    if (cyclesArray) {
+      setCycles(JSON.parse(cyclesArray))
+    }
+  }, [])
 
   const StatusColors = {
     yellow: 'yellow',
@@ -28,7 +43,7 @@ export function History() {
             </tr>
           </thead>
           <tbody>
-            {cycles.map((cycle) => {
+            {savedCycles.map((cycle) => {
               let statusColor: keyof typeof StatusColors = 'yellow'
               let statusText = 'Andamento'
 

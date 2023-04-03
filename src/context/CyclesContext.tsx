@@ -1,4 +1,10 @@
-import { ReactNode, createContext, useReducer, useState } from 'react'
+import {
+  ReactNode,
+  createContext,
+  useEffect,
+  useReducer,
+  useState,
+} from 'react'
 import { Cycle, CyclesReducer } from '../reducers/reducer'
 import {
   ActionTypes,
@@ -21,6 +27,7 @@ interface CyclesContextType {
   setSecondsPassed: (seconds: number) => void
   createNewCycle: (data: CreateCycleData) => void
   interruptCycle: () => void
+  saveCyclesInLocalStorage: () => void
 }
 
 export const CyclesContext = createContext({} as CyclesContextType)
@@ -66,6 +73,11 @@ export function CyclesContextProvider({
     dispatch(markCycleFinishedAction())
   }
 
+  function saveCyclesInLocalStorage() {
+    const cyclesArray = JSON.stringify(cycles)
+    localStorage.setItem('cyclesPomodoroArray', cyclesArray)
+  }
+
   /*  function createNewCycle(data: CreateCycleData) {
     const newCycle: Cycle = {
       id: String(new Date().getTime()),
@@ -109,6 +121,7 @@ export function CyclesContextProvider({
         setSecondsPassed,
         createNewCycle,
         interruptCycle,
+        saveCyclesInLocalStorage,
       }}
     >
       {children}
