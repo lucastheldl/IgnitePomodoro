@@ -40,7 +40,7 @@ export function Countdown() {
 
         if (secondsDifference >= totalSeconds) {
           markCurrentCycleAsFinished()
-
+          document.title = `00:00`
           setSecondsPassed(totalSeconds)
 
           clearInterval(interval)
