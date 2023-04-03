@@ -32,8 +32,6 @@ interface CyclesContextProviderProps {
 export function CyclesContextProvider({
   children,
 }: CyclesContextProviderProps) {
-  // const [cycles, setCycles] = useState<Cycle[]>([])
-  // const [activeCycleId, setActiveCycleId] = useState<string | null>(null)
   const [amountSecondsPassed, setAmountSecondsPassed] = useState(0)
 
   const [cycleState, dispatch] = useReducer(CyclesReducer, {
