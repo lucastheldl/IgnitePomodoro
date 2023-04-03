@@ -21,14 +21,19 @@ export function History() {
           </thead>
           <tbody>
             {cycles.map((cycle) => {
-              const status = cycle.interruptedDate ? 'red' : 'green'
+              const statusColor = cycle.interruptedDate ? 'red' : 'green'
+
+              const statusText = cycle.interruptedDate
+                ? 'Interrompido'
+                : 'Concluído'
+
               return (
                 <tr key={cycle.id}>
                   <td>{cycle.task}</td>
                   <td>{cycle.minutes}</td>
                   <td>Há 2 meses</td>
                   <td>
-                    <Status statusColor={status}>Concluído</Status>
+                    <Status statusColor={statusColor}>{statusText}</Status>
                   </td>
                 </tr>
               )
@@ -40,38 +45,6 @@ export function History() {
               <td>Há 2 meses</td>
               <td>
                 <Status statusColor="yellow">Concluído</Status>
-              </td>
-            </tr>
-            <tr>
-              <td>Tarefa</td>
-              <td>20 minutos</td>
-              <td>Há 2 meses</td>
-              <td>
-                <Status statusColor="red">Concluído</Status>
-              </td>
-            </tr>
-            <tr>
-              <td>Tarefa</td>
-              <td>20 minutos</td>
-              <td>Há 2 meses</td>
-              <td>
-                <Status statusColor="red">Concluído</Status>
-              </td>
-            </tr>
-            <tr>
-              <td>Tarefa</td>
-              <td>20 minutos</td>
-              <td>Há 2 meses</td>
-              <td>
-                <Status statusColor="red">Concluído</Status>
-              </td>
-            </tr>
-            <tr>
-              <td>Tarefa</td>
-              <td>20 minutos</td>
-              <td>Há 2 meses</td>
-              <td>
-                <Status statusColor="red">Concluído</Status>
               </td>
             </tr>
           </tbody>
