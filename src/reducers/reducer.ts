@@ -46,6 +46,11 @@ export function CyclesReducer(state: CyclesState, action: any) {
         }),
         activeCycleId: null,
       }
+    case ActionTypes.LOAD_CYCLES:
+      return {
+        ...state,
+        cycles: [...action.payload.savedCycles],
+      }
 
     default:
       return state

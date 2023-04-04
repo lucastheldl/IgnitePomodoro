@@ -11,8 +11,9 @@ import { CyclesContext } from '../Home'
 import { Cycle } from '../../reducers/reducer'
 
 export function History() {
-  const { cycles, saveCyclesInLocalStorage } = useContext(CyclesContext)
-  const [savedCycles, setCycles] = useState<Cycle[]>([])
+  const { cycles, saveCyclesInLocalStorage, loadCycles } =
+    useContext(CyclesContext)
+  // const [savedCycles, setCycles] = useState<Cycle[]>([])
 
   useEffect(() => {
     if (cycles.length === 0) return
@@ -21,9 +22,8 @@ export function History() {
 
   useEffect(() => {
     const cyclesArray = localStorage.getItem('cyclesPomodoroArray')
-
     if (cyclesArray) {
-      setCycles(JSON.parse(cyclesArray))
+      loadCycles(JSON.parse(cyclesArray))
     }
   }, [])
 
@@ -32,9 +32,6 @@ export function History() {
     green: 'green',
     red: 'red',
   } as const
-  interface StatusIndex {
-    statusColor: keyof typeof StatusColors
-  }
 
   return (
     <HistoryContainer>
@@ -51,7 +48,7 @@ export function History() {
             </tr>
           </thead>
           <tbody>
-            {savedCycles.map((cycle) => {
+            {cycles.map((cycle) => {
               let statusColor: keyof typeof StatusColors = 'yellow'
               let statusText = 'Andamento'
               const dateDifference = differenceInMinutes(

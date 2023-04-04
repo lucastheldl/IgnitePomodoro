@@ -4,6 +4,7 @@ import {
   ActionTypes,
   addNewCycleAction,
   interruptCycleCycleAction,
+  loadCyclesAction,
   markCycleFinishedAction,
 } from '../reducers/cycles/actions'
 
@@ -22,6 +23,7 @@ interface CyclesContextType {
   createNewCycle: (data: CreateCycleData) => void
   interruptCycle: () => void
   saveCyclesInLocalStorage: () => void
+  loadCycles: (savedCycle: Cycle[]) => void
 }
 
 export const CyclesContext = createContext({} as CyclesContextType)
@@ -71,6 +73,9 @@ export function CyclesContextProvider({
     const cyclesArray = JSON.stringify(cycles)
     localStorage.setItem('cyclesPomodoroArray', cyclesArray)
   }
+  function loadCycles(savedCycles: Cycle[]) {
+    dispatch(loadCyclesAction(savedCycles))
+  }
 
   /*  function createNewCycle(data: CreateCycleData) {
     const newCycle: Cycle = {
@@ -101,7 +106,7 @@ export function CyclesContextProvider({
   } */
 
   const activeCycle = cycleState.cycles.find(
-    (cycle) => cycle.id === cycleState.activeCycleId,
+    (cycle: Cycle) => cycle.id === cycleState.activeCycleId,
   )
 
   return (
@@ -116,6 +121,7 @@ export function CyclesContextProvider({
         createNewCycle,
         interruptCycle,
         saveCyclesInLocalStorage,
+        loadCycles,
       }}
     >
       {children}
