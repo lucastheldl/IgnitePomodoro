@@ -48,44 +48,47 @@ export function History() {
             </tr>
           </thead>
           <tbody>
-            {cycles.map((cycle) => {
-              let statusColor: keyof typeof StatusColors = 'yellow'
-              let statusText = 'Andamento'
-              const dateDifference = differenceInMinutes(
-                new Date(),
-                new Date(cycle.startDate),
-              )
-              console.log(dateDifference)
-              const date = formatDistance(
-                subMinutes(new Date(), dateDifference),
-                new Date(),
-                {
-                  addSuffix: true,
-                  locale: ptBR,
-                },
-              )
+            {cycles
+              .slice(0)
+              .reverse()
+              .map((cycle) => {
+                let statusColor: keyof typeof StatusColors = 'yellow'
+                let statusText = 'Andamento'
+                const dateDifference = differenceInMinutes(
+                  new Date(),
+                  new Date(cycle.startDate),
+                )
+                console.log(dateDifference)
+                const date = formatDistance(
+                  subMinutes(new Date(), dateDifference),
+                  new Date(),
+                  {
+                    addSuffix: true,
+                    locale: ptBR,
+                  },
+                )
 
-              if (cycle.interruptedDate) {
-                statusColor = 'red'
-                statusText = 'Interrompido'
-              } else if (cycle.completedDate) {
-                statusColor = 'green'
-                statusText = 'Concluído'
-              }
+                if (cycle.interruptedDate) {
+                  statusColor = 'red'
+                  statusText = 'Interrompido'
+                } else if (cycle.completedDate) {
+                  statusColor = 'green'
+                  statusText = 'Concluído'
+                }
 
-              return (
-                <tr key={cycle.id}>
-                  <td>{cycle.task}</td>
-                  <td>{cycle.minutes}</td>
-                  <td>{date}</td>
-                  <td>
-                    <Status statusColor={StatusColors[statusColor]}>
-                      {statusText}
-                    </Status>
-                  </td>
-                </tr>
-              )
-            })}
+                return (
+                  <tr key={cycle.id}>
+                    <td>{cycle.task}</td>
+                    <td>{cycle.minutes}</td>
+                    <td>{date}</td>
+                    <td>
+                      <Status statusColor={StatusColors[statusColor]}>
+                        {statusText}
+                      </Status>
+                    </td>
+                  </tr>
+                )
+              })}
           </tbody>
         </table>
       </HistoryList>
