@@ -1,4 +1,11 @@
 import { useContext, useEffect, useState } from 'react'
+import {
+  differenceInMinutes,
+  formatDistance,
+  subDays,
+  subMinutes,
+} from 'date-fns'
+import { ptBR } from 'date-fns/locale'
 import { HistoryContainer, HistoryList, Status } from './styles'
 import { CyclesContext } from '../Home'
 import { Cycle } from '../../reducers/reducer'
@@ -28,6 +35,7 @@ export function History() {
   interface StatusIndex {
     statusColor: keyof typeof StatusColors
   }
+
   return (
     <HistoryContainer>
       <h1>Meu histórico</h1>
@@ -46,6 +54,19 @@ export function History() {
             {savedCycles.map((cycle) => {
               let statusColor: keyof typeof StatusColors = 'yellow'
               let statusText = 'Andamento'
+              const dateDifference = differenceInMinutes(
+                new Date(),
+                new Date(cycle.startDate),
+              )
+              console.log(dateDifference)
+              const date = formatDistance(
+                subMinutes(new Date(), dateDifference),
+                new Date(),
+                {
+                  addSuffix: true,
+                  locale: ptBR,
+                },
+              )
 
               if (cycle.interruptedDate) {
                 statusColor = 'red'
@@ -59,7 +80,7 @@ export function History() {
                 <tr key={cycle.id}>
                   <td>{cycle.task}</td>
                   <td>{cycle.minutes}</td>
-                  <td>Há 2 meses</td>
+                  <td>{date}</td>
                   <td>
                     <Status statusColor={StatusColors[statusColor]}>
                       {statusText}

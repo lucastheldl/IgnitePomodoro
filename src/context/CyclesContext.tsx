@@ -1,10 +1,4 @@
-import {
-  ReactNode,
-  createContext,
-  useEffect,
-  useReducer,
-  useState,
-} from 'react'
+import { ReactNode, createContext, useReducer, useState } from 'react'
 import { Cycle, CyclesReducer } from '../reducers/reducer'
 import {
   ActionTypes,
