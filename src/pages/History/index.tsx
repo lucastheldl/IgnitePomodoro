@@ -8,7 +8,6 @@ import { Cycle } from '../../reducers/reducer'
 export function History() {
   const { cycles, saveCyclesInLocalStorage, loadCycles } =
     useContext(CyclesContext)
-  // const [savedCycles, setCycles] = useState<Cycle[]>([])
 
   useEffect(() => {
     if (cycles.length === 0) return

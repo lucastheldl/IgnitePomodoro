@@ -22,7 +22,7 @@ export const HistoryContainer = styled.main`
 export const HistoryList = styled.div`
   flex: 1;
   overflow: auto;
-  overflow-y: scroll;
+  overflow-y: auto;
   margin-top: 2rem;
   max-height: 400px;
 
@@ -43,6 +43,7 @@ export const HistoryList = styled.div`
 
     border-collapse: collapse;
     min-width: 600px;
+    min-height: 400px;
 
     th {
       background-color: ${(props) => props.theme['gray-600']};
