@@ -1,10 +1,5 @@
 import { useContext, useEffect, useState } from 'react'
-import {
-  differenceInMinutes,
-  formatDistance,
-  subDays,
-  subMinutes,
-} from 'date-fns'
+import { differenceInMinutes, formatDistance, subMinutes } from 'date-fns'
 import { ptBR } from 'date-fns/locale'
 import { HistoryContainer, HistoryList, Status } from './styles'
 import { CyclesContext } from '../Home'
@@ -33,6 +28,11 @@ export function History() {
     red: 'red',
   } as const
 
+  const statusOpt = {
+    green: 'Concluído',
+    red: 'Interrompido',
+    yellow: 'Pausado',
+  }
   return (
     <HistoryContainer>
       <h1>Meu histórico</h1>
@@ -53,12 +53,12 @@ export function History() {
               .reverse()
               .map((cycle) => {
                 let statusColor: keyof typeof StatusColors = 'yellow'
-                let statusText = 'Andamento'
+
                 const dateDifference = differenceInMinutes(
                   new Date(),
                   new Date(cycle.startDate),
                 )
-                console.log(dateDifference)
+
                 const date = formatDistance(
                   subMinutes(new Date(), dateDifference),
                   new Date(),
@@ -70,10 +70,8 @@ export function History() {
 
                 if (cycle.interruptedDate) {
                   statusColor = 'red'
-                  statusText = 'Interrompido'
                 } else if (cycle.completedDate) {
                   statusColor = 'green'
-                  statusText = 'Concluído'
                 }
 
                 return (
@@ -83,7 +81,7 @@ export function History() {
                     <td>{date}</td>
                     <td>
                       <Status statusColor={StatusColors[statusColor]}>
-                        {statusText}
+                        {statusOpt[statusColor]}
                       </Status>
                     </td>
                   </tr>

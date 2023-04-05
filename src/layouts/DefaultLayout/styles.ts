@@ -5,6 +5,10 @@ export const LayoutContainer = styled.div`
   height: calc(100vh - 10rem);
   margin: 5rem auto;
   padding: 2.5rem;
+
+  @media (max-width: 800px) {
+    height: auto;
+  }
   @media (max-width: 460px) {
     max-width: 25rem;
   }
